@@ -305,14 +305,14 @@
   padding: 0 6px;
   border-radius: 3px;
   border-left: 2px solid var(--accent);
-  background: var(--part);
+  background: var(--line-strong);
   color: var(--ink);
   font-size: 13px;
   line-height: 1.6;
   text-decoration: none;
 }
 .cite:hover {
-  background: var(--line-strong);
+  background: color-mix(in srgb, var(--accent) 28%, var(--line-strong));
 }
 .sources {
   margin: 0;
