@@ -1,6 +1,27 @@
 {
   "version": "0.0.1",
   "configurations": [
-    { "name": "dev", "runtimeExecutable": "pnpm", "runtimeArgs": ["dev", "--port", "3217"], "port": 3217 }
+    {
+      "name": "dev",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": [
+        "dev",
+        "--port",
+        "3217"
+      ],
+      "port": 3217
+    },
+    {
+      "name": "seed-507",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "5199",
+        "--directory",
+        "../507-mechanical-movements"
+      ],
+      "port": 5199
+    }
   ]
 }

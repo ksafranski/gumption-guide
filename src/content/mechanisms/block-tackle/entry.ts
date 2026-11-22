@@ -16,8 +16,8 @@ export default defineEntry({
   key: "Mechanical advantage = number of strands supporting the load.",
   uses: ["Cranes", "Sailing rigs", "Elevators", "Rock climbing hauls", "Garage hoists"],
   tags: ["pulley", "mechanical-advantage", "rope"],
-  related: ["belt-drive"],
+  related: ["belt-drive", "toggle"],
   outLabel: "Load height",
   status: "reviewed",
-  order: 5,
+  order: 26,
 });

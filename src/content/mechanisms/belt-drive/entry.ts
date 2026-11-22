@@ -25,5 +25,5 @@ export default defineEntry({
   related: ["spur-gears"],
   outLabel: "Small pulley angle",
   status: "reviewed",
-  order: 4,
+  order: 9,
 });

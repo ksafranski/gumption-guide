@@ -16,7 +16,7 @@ export default defineEntry({
   key: "Stroke = 2 × crank radius.",
   uses: ["Car engines", "Steam engines", "Air compressors", "Pumps", "Jigsaws"],
   tags: ["linkage", "rotary-to-linear"],
-  related: ["rack-pinion"],
+  related: ["scotch-yoke", "quick-return", "four-bar"],
   outLabel: "Slider position",
   status: "reviewed",
   order: 3,

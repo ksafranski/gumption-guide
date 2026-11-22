@@ -20,7 +20,8 @@ describe("search", () => {
     expect(ids("leverage")).toContain("truckers-hitch");
   });
   it("supports field: queries", () => {
-    expect(ids("use:steering")).toEqual(["rack-pinion"]);
+    expect(ids("use:steering")).toEqual(expect.arrayContaining(["rack-pinion", "worm-gear"]));
+    expect(ids("use:steering")).not.toContain("spur-gears");
     expect(
       ids("category:knots").every(
         (id) =>

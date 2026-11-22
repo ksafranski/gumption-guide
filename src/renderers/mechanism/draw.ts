@@ -22,6 +22,7 @@ export type Colors = {
 export type Style = { fill?: string | null; stroke?: string | null; w?: number };
 export type PaintOpts = Style & { dash?: number[]; dashOffset?: number; rule?: CanvasFillRule };
 type Pt = [number, number];
+export type Point = { x: number; y: number };
 
 export const colors: Colors = {
   ink: "#222",
@@ -116,7 +117,7 @@ function core(ctx: CanvasRenderingContext2D) {
       ctx.arc(x, y, r, a0, a1);
       d.paint({ fill: null, ...o });
     },
-    poly(pts: Pt[], o: PaintOpts & { close?: boolean } = {}) {
+    poly(pts: ReadonlyArray<readonly number[]>, o: PaintOpts & { close?: boolean } = {}) {
       ctx.beginPath();
       pts.forEach(([x, y], i) => (i ? ctx.lineTo(x, y) : ctx.moveTo(x, y)));
       if (o.close !== false) ctx.closePath();

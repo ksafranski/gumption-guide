@@ -15,9 +15,9 @@ export default defineEntry({
   ],
   key: "Rise per turn = π × (big radius − small radius).",
   uses: ["Hand hoists", "Chain blocks", "Well windlasses", "Precision lifting"],
-  tags: ["pulley", "mechanical-advantage", "rope", "circumference"],
-  related: ["block-tackle"],
+  tags: ["pulley", "rotary-to-linear", "mechanical-advantage", "rope", "circumference"],
+  related: ["block-tackle", "worm-gear", "lead-screw"],
   outLabel: "Load height",
   status: "reviewed",
-  order: 6,
+  order: 35,
 });

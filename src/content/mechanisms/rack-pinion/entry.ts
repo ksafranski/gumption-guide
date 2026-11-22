@@ -22,7 +22,7 @@ export default defineEntry({
     "Sliding gates",
   ],
   tags: ["gearing", "rotary-to-linear", "circumference"],
-  related: ["spur-gears"],
+  related: ["spur-gears", "scotch-yoke"],
   outLabel: "Rack position",
   status: "reviewed",
   order: 2,
