@@ -24,3 +24,9 @@
 - Mechanism tags (`gearing`, `linkage`, `cam`, `pulley`, `screw`, `indexing`, `rotary-to-linear`, `intermittent`, `straight-line`, `mechanical-advantage`, `speed-ratio`, ...) were assigned by family/motion plus a hand list; worth a skim.
 - Fonts: swapped Instrument Serif for **Barlow Condensed** (headings) + **JetBrains Mono** (labels/specs) for the workbench feel; Inter kept for body.
 - Units entries are marked `draft` too (not safety-critical; flip once checked).
+
+## Ask the guide (AI answers)
+- `/api/ask` sends the whole corpus (~43K tokens) as a cached system block to `anthropic/claude-haiku-5.5` via Vercel AI Gateway. Needs `AI_GATEWAY_API_KEY` locally; on Vercel the OIDC token works.
+- MDX bodies (`find-north`, `fire-lay`) aren't in the corpus yet, only their `entry.ts` fields.
+- Set an AI Gateway budget and a WAF rate-limit rule on `/api/ask` before launch; the endpoint is public.
+- Check `cache_read` in the `[ask]` log lines after deploy to confirm caching works through the gateway.

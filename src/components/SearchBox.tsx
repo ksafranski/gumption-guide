@@ -5,11 +5,15 @@ import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { CATEGORIES, categoryById } from "@/content/categories";
 import type { CategoryId } from "@/content/schema";
 import { groupByCategory, preferCategory } from "@/lib/search/engine";
+import { Answer, type AskState } from "./Answer";
 import { Highlight } from "./Highlight";
 import { useSearchEngine } from "./useSearch";
 import s from "./SearchBox.module.css";
 
 const LIMIT = 12;
+
+/** Queries using search syntax go to the results page, not the AI. */
+const isSyntax = (q: string) => /(^|\s)[a-z]+:\S|^\/|"/i.test(q);
 
 /** The section the reader is in, from the first path segment. */
 function useSection() {
@@ -34,6 +38,51 @@ export function SearchBox({ counts }: { counts: Record<string, number> }) {
     [res, section],
   );
   const groups = useMemo(() => groupByCategory(flat), [flat]);
+  const docs = useMemo(() => new Map(engine?.docs.map((d) => [d.id, d])), [engine]);
+  const [ask, setAsk] = useState<AskState | null>(null);
+  const asking = useRef<AbortController | null>(null);
+
+  const stopAsk = () => {
+    asking.current?.abort();
+    asking.current = null;
+    setAsk(null);
+  };
+
+  const askGuide = async (question: string) => {
+    asking.current?.abort();
+    const ctl = new AbortController();
+    asking.current = ctl;
+    setSel(-1);
+    setOpen(true);
+    setAsk({ q: question, text: "", done: false });
+    const update = (fn: (a: AskState) => AskState) =>
+      setAsk((a) => (a && a.q === question && asking.current === ctl ? fn(a) : a));
+    try {
+      const r = await fetch("/api/ask", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ q: question, in: section?.id }),
+        signal: ctl.signal,
+      });
+      if (!r.ok || !r.body) {
+        const msg = (await r.text().catch(() => "")) || "Couldn't get an answer.";
+        return update((a) => ({ ...a, text: msg, done: true, failed: true }));
+      }
+      const reader = r.body.pipeThrough(new TextDecoderStream()).getReader();
+      for (;;) {
+        const { value, done } = await reader.read();
+        if (done) break;
+        update((a) => ({ ...a, text: a.text + value }));
+      }
+      update((a) => ({ ...a, done: true }));
+    } catch (err) {
+      if ((err as Error).name !== "AbortError")
+        update((a) => ({ ...a, text: "Couldn't reach the guide. Try searching.", done: true }));
+    }
+  };
+
+  const searchPage = (query: string) =>
+    go(`/search?q=${encodeURIComponent(query)}${section ? `&in=${section.id}` : ""}`);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -48,6 +97,7 @@ export function SearchBox({ counts }: { counts: Record<string, number> }) {
   }, []);
 
   const go = (href: string) => {
+    stopAsk();
     setOpen(false);
     setQ("");
     input.current?.blur();
@@ -67,9 +117,11 @@ export function SearchBox({ counts }: { counts: Record<string, number> }) {
       input.current?.blur();
     } else if (e.key === "Enter") {
       e.preventDefault();
+      const query = q.trim();
       if (sel >= 0 && flat[sel]) go(flat[sel].doc.href);
-      else if (q.trim())
-        go(`/search?q=${encodeURIComponent(q.trim())}${section ? `&in=${section.id}` : ""}`);
+      else if (!query) return;
+      else if (e.shiftKey || isSyntax(query)) searchPage(query);
+      else if (ask?.q !== query) askGuide(query);
     }
   };
 
@@ -101,6 +153,7 @@ export function SearchBox({ counts }: { counts: Record<string, number> }) {
           }}
           onBlur={() => setTimeout(() => setOpen(false), 120)}
           onChange={(e) => {
+            if (ask) stopAsk();
             setQ(e.target.value);
             setSel(-1);
             setOpen(true);
@@ -110,8 +163,35 @@ export function SearchBox({ counts }: { counts: Record<string, number> }) {
         <kbd>/</kbd>
       </div>
       <SectionMenu current={section?.id ?? null} counts={counts} />
-      {open && q.trim() && (
+      {open && ask && (
+        <div className={s.suggest} onMouseDown={(e) => e.preventDefault()}>
+          <Answer ask={ask} docs={docs} onNavigate={() => {
+              stopAsk();
+              setOpen(false);
+              setQ("");
+              input.current?.blur();
+            }} onSearch={() => searchPage(ask.q)} />
+        </div>
+      )}
+      {open && !ask && q.trim() && (
         <div id={listId} className={s.suggest} role="listbox">
+          {!isSyntax(q) && (
+            <div
+              className={s.askRow}
+              onMouseDown={(e) => {
+                e.preventDefault();
+                askGuide(q.trim());
+              }}
+            >
+              <span className={s.askMark} aria-hidden="true">
+                ?
+              </span>
+              <span className={s.label}>
+                Ask the guide: <b>{q.trim()}</b>
+              </span>
+              <kbd className={s.key}>↵</kbd>
+            </div>
+          )}
           {res?.corrected && (
             <div className={s.hint}>
               Showing results for <b>{res.corrected}</b>
@@ -152,7 +232,7 @@ export function SearchBox({ counts }: { counts: Record<string, number> }) {
           <div className={s.foot}>
             <code>tag:</code> <code>category:</code> <code>use:</code>{" "}
             <code>&quot;phrase&quot;</code> <code>/regex/</code>
-            <span>↵ all results</span>
+            <span>↵ ask · ⇧↵ all results</span>
           </div>
         </div>
       )}

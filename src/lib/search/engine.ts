@@ -242,7 +242,7 @@ export function createSearch(docs: SearchDoc[]) {
     return { toks, results };
   }
 
-  return { run };
+  return { run, docs };
 }
 
 /** Character ranges in `str` matched by the query terms (for highlighting). */
