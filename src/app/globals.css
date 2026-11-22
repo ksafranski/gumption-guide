@@ -227,15 +227,16 @@ select {
 }
 .k-o {
   stroke: var(--ink);
-  stroke-width: 11;
+  stroke-width: 10;
+  stroke-linecap: butt !important;
 }
 .k-f {
   stroke: var(--rope);
-  stroke-width: 8;
+  stroke-width: 7;
 }
 .k-lay {
   stroke: var(--rope-lay);
-  stroke-width: 8;
+  stroke-width: 7;
   stroke-dasharray: 1.5 5;
   stroke-linecap: butt !important;
 }
@@ -407,4 +408,9 @@ select {
   background: var(--part);
   padding: 1px 4px;
   border-radius: 3px;
+}
+.k-ringfront {
+  fill: none;
+  stroke: var(--metal);
+  stroke-width: 6;
 }

@@ -68,7 +68,7 @@ export function KnotFrame({
         .map((s) => (
           <path key={`g${s.i}`} d={s.d} className={s.back ? "k-ghost k-ghost-back" : "k-ghost"} />
         ))}
-      {cur.extra}
+      {!plain && cur.extra}
     </svg>
   );
 }

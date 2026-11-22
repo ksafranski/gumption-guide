@@ -1,7 +1,7 @@
 # TODO / needs a human
 
 ## Content to verify
-- **All knot diagrams** (`src/content/knots/*/render.tsx`) are first-pass schematics. Check each step against a real tie, especially bowline crossings, timber-hitch twists, trucker's-hitch locking hitches and the square-lashing start hitch.
+- **Knot diagrams** (`src/content/knots/*/render.tsx`) were redrawn with checked over/under crossings, but they're still schematic. Tie each one along with the steps before flipping it to `reviewed`. Known simplifications: the trucker's-hitch loop is drawn as a crossed loop (any fixed loop works); square-lashing frapping is shown as turns just above and below the crosspiece, since the real turns sit between the poles where a front view can't see them.
 - **Knot text**: security/strength notes are general guidance, not ratings. Review before flipping any knot to `reviewed`.
 - **ABOK numbers**: only `bowline` → 1010 is set. Clove hitch, timber hitch, trucker's hitch and square lashing are left out until confirmed.
 - **Brown numbers** (`refs.brown`): none set for the 6 ported mechanisms. Need the plate numbers from the 1868 book.
