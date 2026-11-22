@@ -1,36 +1,37 @@
 /* Gumption Guide — design tokens and base styles.
-   Shop-paper light mode, charcoal-bench dark mode. Token names carried over from 507 Movements. */
+   Charcoal-bench dark by default; shop-paper light via <html data-theme="light">. Token names from 507 Movements. */
 :root {
-  --bg: #ece7dc; /* shop paper */
-  --surface: #f8f5ee; /* index card */
-  --ink: #1f1d1a;
-  --muted: #6b655a;
-  --line: #d8d1c2;
-  --line-strong: #c4bba8;
-  --part: #e6e0d2;
-  --ground: #958e7f;
-  --input: #d4520f; /* safety orange: the thing you drive */
-  --input-fill: #f8dcc8;
-  --output: #1f5aa6; /* blueprint blue: the thing that moves */
-  --output-fill: #d8e4f4;
-  --focus: #1f5aa6;
-  --tape: #f2c230; /* tape-measure yellow */
-  --tape-ink: #1f1d1a;
-  --warn: #b3261e;
-  --warn-fill: #f6e1dc;
+  --bg: #171614;
+  --surface: #201e1b;
+  --ink: #ebe6da;
+  --muted: #9c9587;
+  --line: #2f2c28;
+  --line-strong: #403c36;
+  --part: #2a2824;
+  --ground: #6f695f;
+  --input: #ff8a4c;
+  --input-fill: #3d2517;
+  --output: #74aaf5;
+  --output-fill: #1a2a42;
+  --focus: #74aaf5;
+  --tape: #e8b923;
+  --tape-ink: #1a1814;
+  --warn: #ff7b6e;
+  --warn-fill: #3a1d1a;
 
-  --rope: #d9c08f;
-  --rope-lay: #a98a52;
-  --rope-new: #f08a4b;
-  --wood: #d8b98a;
-  --wood-grain: #b8956a;
-  --metal: #9aa0a6;
+  --rope: #b89c66;
+  --rope-lay: #7d6640;
+  --rope-new: #ff8a4c;
+  --wood: #6e5639;
+  --wood-grain: #574329;
+  --metal: #7b8187;
 
   /* category accents */
-  --c-mechanisms: #d4520f;
-  --c-knots: #8c6420;
-  --c-units: #b8860b;
-  --c-fieldcraft: #3f6b35;
+  --c-mechanisms: #ff8a4c;
+  --c-knots: #d1a356;
+  --c-units: #e8b923;
+  --c-fieldcraft: #84b56f;
+  --c-first-aid: #e5615a;
   --accent: var(--ink);
 
   --grid:
@@ -39,8 +40,8 @@
   --grid-fine:
     linear-gradient(var(--grid-line-fine) 1px, transparent 1px) 0 0 / 12px 12px,
     linear-gradient(90deg, var(--grid-line-fine) 1px, transparent 1px) 0 0 / 12px 12px;
-  --grid-line: rgb(31 29 26 / 0.045);
-  --grid-line-fine: rgb(31 90 166 / 0.05);
+  --grid-line: rgb(235 230 218 / 0.035);
+  --grid-line-fine: rgb(116 170 245 / 0.05);
 
   --radius: 6px;
   --radius-sm: 4px;
@@ -50,42 +51,42 @@
   --display: var(--font-display), "Arial Narrow", sans-serif;
   --sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
   --mono: var(--font-mono), ui-monospace, Menlo, monospace;
-  --page-size: letter; /* book trim; switch to "6in 9in" later */
-  color-scheme: light dark;
+  --page-size: letter;
+  color-scheme: dark;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #171614;
-    --surface: #201e1b;
-    --ink: #ebe6da;
-    --muted: #9c9587;
-    --line: #2f2c28;
-    --line-strong: #403c36;
-    --part: #2a2824;
-    --ground: #6f695f;
-    --input: #ff8a4c;
-    --input-fill: #3d2517;
-    --output: #74aaf5;
-    --output-fill: #1a2a42;
-    --focus: #74aaf5;
-    --tape: #e8b923;
-    --tape-ink: #1a1814;
-    --warn: #ff7b6e;
-    --warn-fill: #3a1d1a;
-    --rope: #b89c66;
-    --rope-lay: #7d6640;
-    --rope-new: #ff8a4c;
-    --wood: #6e5639;
-    --wood-grain: #574329;
-    --metal: #7b8187;
-    --c-mechanisms: #ff8a4c;
-    --c-knots: #d1a356;
-    --c-units: #e8b923;
-    --c-fieldcraft: #84b56f;
-    --grid-line: rgb(235 230 218 / 0.035);
-    --grid-line-fine: rgb(116 170 245 / 0.05);
-  }
+:root[data-theme="light"] {
+  --bg: #ece7dc;
+  --surface: #f8f5ee;
+  --ink: #1f1d1a;
+  --muted: #6b655a;
+  --line: #d8d1c2;
+  --line-strong: #c4bba8;
+  --part: #e6e0d2;
+  --ground: #958e7f;
+  --input: #d4520f;
+  --input-fill: #f8dcc8;
+  --output: #1f5aa6;
+  --output-fill: #d8e4f4;
+  --focus: #1f5aa6;
+  --tape: #f2c230;
+  --tape-ink: #1f1d1a;
+  --warn: #b3261e;
+  --warn-fill: #f6e1dc;
+  --rope: #d9c08f;
+  --rope-lay: #a98a52;
+  --rope-new: #f08a4b;
+  --wood: #d8b98a;
+  --wood-grain: #b8956a;
+  --metal: #9aa0a6;
+  --c-mechanisms: #d4520f;
+  --c-knots: #8c6420;
+  --c-units: #b8860b;
+  --c-fieldcraft: #3f6b35;
+  --c-first-aid: #b3261e;
+  --grid-line: rgb(31 29 26 / 0.045);
+  --grid-line-fine: rgb(31 90 166 / 0.05);
+  color-scheme: light;
 }
 
 [data-cat="mechanisms"] {
@@ -100,6 +101,9 @@
 [data-cat="fieldcraft"] {
   --accent: var(--c-fieldcraft);
 }
+[data-cat="first-aid"] {
+  --accent: var(--c-first-aid);
+}
 
 * {
   box-sizing: border-box;
@@ -113,8 +117,6 @@ html {
 body {
   margin: 0;
   background: var(--bg);
-  background-image: var(--grid);
-  background-attachment: fixed;
   color: var(--ink);
   font: 15px/1.55 var(--sans);
   -webkit-font-smoothing: antialiased;
@@ -180,19 +182,6 @@ select {
   border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
   text-decoration: none;
 }
-.draft {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  font: 700 10px/1 var(--mono);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--warn);
-  border: 1.5px dashed var(--warn);
-  padding: 4px 7px 3px;
-  border-radius: 3px;
-}
-
 /* ---------- knot SVG parts (shared across knot frames) ---------- */
 .k-wood rect {
   fill: var(--wood);
@@ -233,6 +222,14 @@ select {
 .k-f {
   stroke: var(--rope);
   stroke-width: 7;
+  stroke-linecap: butt !important;
+}
+/* Round fill caps are drawn per joint/end (see Frame), not by the stroke. */
+.k-cap {
+  fill: var(--rope);
+}
+.k-new .k-cap {
+  fill: var(--rope-new);
 }
 .k-lay {
   stroke: var(--rope-lay);
@@ -246,10 +243,7 @@ select {
 .k-new .k-lay {
   stroke: color-mix(in srgb, var(--rope-new) 70%, var(--ink));
 }
-.k-tip {
-  stroke: none;
-}
-.k-whipcap {
+.k-knuckle {
   fill: var(--ink);
 }
 .k-ghost {
@@ -319,8 +313,8 @@ select {
   gap: 16px;
   padding-top: 22px;
   padding-bottom: 32px;
-  margin-top: 56px;
-  border-top: 2px solid var(--ink);
+  margin-top: 64px;
+  border-top: 1px solid var(--line);
   font: 600 10.5px/1 var(--mono);
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -347,21 +341,22 @@ select {
   padding: 40px 0;
   text-align: center;
 }
-@media (max-width: 560px) {
-  .grid {
-    grid-template-columns: 1fr 1fr;
+@media (max-width: 799px) {
+  .grid,
+  .grid.small {
+    grid-template-columns: 1fr;
     gap: 10px;
   }
 }
 
 /* Page heading block */
 .page-head {
-  padding: 36px 0 22px;
+  padding: 28px 0 18px;
 }
 .page-head h1 {
-  margin: 10px 0 6px;
-  font-size: clamp(40px, 6vw, 64px);
-  line-height: 0.95;
+  margin: 8px 0 4px;
+  font-size: clamp(30px, 4vw, 40px);
+  line-height: 1;
 }
 .page-head p {
   margin: 0;

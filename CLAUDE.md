@@ -10,6 +10,7 @@ Full brief: `SETUP.md`. Open questions and unverified facts: `TODO.md`.
 - `entry.ts` is **pure data** (no DOM, no React). `render.*` is **client-only**, loaded via the generated `renders` registry (`useRender(id)`).
 - `src/lib/content` and `src/lib/search` must never import React or browser APIs (the API and a future MCP server use them).
 - Entry ids are globally unique kebab-case and equal the folder name. URL is `/<category>/<id>`.
+- Every entry has a `render.tsx`: a live diagram (mechanisms, knots) or a static SVG illustration (units, fieldcraft; default-exported hook-free function returning an `<svg viewBox="0 0 160 120">`). Cards show it; a test enforces it.
 - Build fails on: schema violation, duplicate id, `related` pointing at a missing id. Orphans and single-use tags only warn.
 - Dynamic route pages read `params` under `<Suspense>` (Cache Components instant navigation).
 

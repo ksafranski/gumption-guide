@@ -63,11 +63,6 @@ async function EntryView({ params }: Props) {
         <div className={s.info}>
           <div className={s.stamps}>
             <span className="tape">{cat.short}</span>
-            {e.status === "draft" && (
-              <span className="draft" title="Not yet reviewed by a human for accuracy and safety">
-                Unreviewed draft
-              </span>
-            )}
           </div>
           <h1>{e.title}</h1>
           {e.aka?.length ? <p className={s.aka}>aka {e.aka.join(" · ")}</p> : null}

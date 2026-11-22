@@ -1,62 +1,160 @@
+/* One bar: query field filling the space, section picker on the right. */
 .search {
   position: relative;
   display: flex;
-  align-items: center;
+  align-items: stretch;
   width: 100%;
-  max-width: 560px;
-  justify-self: center;
+  height: 40px;
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
 }
-.search > svg {
+.search:focus-within {
+  border-color: var(--muted);
+}
+
+/* ---- section picker ---- */
+.scope {
+  position: relative;
+  flex: none;
+  display: flex;
+}
+.scopeBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 12px;
+  color: var(--ink);
+  background: none;
+  border: 0;
+  border-left: 1px solid var(--line);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font: 600 11px/1 var(--mono);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.scopeBtn:hover,
+.scopeBtn[aria-expanded="true"] {
+  background: var(--part);
+}
+.scopeBtn svg {
+  width: 9px;
+  height: 6px;
+  fill: none;
+  stroke: var(--muted);
+  stroke-width: 1.5;
+}
+.dot {
+  width: 7px;
+  height: 7px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--accent);
+}
+.search:not([data-cat]) .scopeBtn .dot {
+  background: var(--muted);
+}
+.menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: -1px;
+  min-width: 230px;
+  margin: 0;
+  padding: 4px;
+  list-style: none;
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  z-index: 21;
+}
+.menu a {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 8px 10px;
+  border-radius: 3px;
+  text-decoration: none;
+  font-size: 14px;
+}
+.menu a:hover,
+.menu a:focus-visible {
+  background: var(--part);
+}
+.menu a[aria-current="true"] {
+  font-weight: 600;
+}
+.menu li:first-child a {
+  padding-left: 26px;
+  color: var(--muted);
+}
+.n {
+  margin-left: auto;
+  font: 11px var(--mono);
+  color: var(--muted);
+}
+
+/* ---- query field ---- */
+.field {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+}
+.field > svg {
   position: absolute;
   left: 12px;
-  width: 16px;
-  height: 16px;
+  width: 15px;
+  height: 15px;
   fill: none;
   stroke: var(--muted);
   stroke-width: 1.8;
   stroke-linecap: round;
   pointer-events: none;
 }
-.search input {
+.field input {
   width: 100%;
-  height: 40px;
-  padding: 0 34px 0 36px;
+  height: 100%;
+  padding: 0 34px 0 35px;
   color: var(--ink);
-  background: var(--surface);
-  border: 1.5px solid var(--line-strong);
-  border-radius: var(--radius-sm);
+  background: none;
+  border: 0;
   outline: none;
 }
-.search input:focus {
-  border-color: var(--ink);
+.field input::placeholder {
+  color: var(--muted);
 }
-.search input::-webkit-search-cancel-button {
+.field input::-webkit-search-cancel-button {
   display: none;
 }
-.search kbd {
+.field kbd {
   position: absolute;
   right: 10px;
   font: 600 11px/1 var(--mono);
   color: var(--muted);
-  border: 1.5px solid var(--line-strong);
+  border: 1px solid var(--line-strong);
   border-radius: 3px;
   padding: 3px 6px;
 }
-.search input:focus + kbd {
+.field input:focus + kbd {
   display: none;
 }
+
+/* ---- suggestions ---- */
 .suggest {
   position: absolute;
   top: calc(100% + 6px);
-  left: 0;
-  right: 0;
+  left: -1px;
+  right: -1px;
   max-height: min(70vh, 520px);
   overflow-y: auto;
   overscroll-behavior: contain;
   background: var(--surface);
-  border: 2px solid var(--ink);
-  border-radius: var(--radius);
-  box-shadow: 4px 4px 0 rgb(0 0 0 / 0.15);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  box-shadow: 0 12px 32px rgb(0 0 0 / 0.35);
   padding: 6px;
   z-index: 20;
 }
@@ -106,7 +204,7 @@
   flex-wrap: wrap;
   gap: 6px;
   align-items: center;
-  border-top: 1px dashed var(--line-strong);
+  border-top: 1px solid var(--line);
   margin-top: 6px;
   padding: 9px 10px 4px;
   font-size: 11px;
@@ -122,13 +220,13 @@
   margin-left: auto;
   font-family: var(--mono);
 }
-@media (max-width: 1080px) {
-  .search {
-    max-width: none;
+@media (max-width: 640px) {
+  .field kbd {
+    display: none;
   }
 }
-@media (max-width: 560px) {
-  .search kbd {
+@media (max-width: 799px) {
+  .scopeLabel {
     display: none;
   }
 }

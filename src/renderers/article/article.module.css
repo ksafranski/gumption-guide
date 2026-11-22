@@ -49,7 +49,7 @@
 }
 .gear li {
   font: 500 12.5px var(--mono);
-  border: 1.5px solid var(--line-strong);
+  border: 1px solid var(--line-strong);
   padding: 4px 9px;
   border-radius: 3px;
   background: var(--surface);
@@ -68,22 +68,4 @@
   padding-left: 18px;
   display: grid;
   gap: 6px;
-}
-.thumb {
-  aspect-ratio: 4 / 3;
-  padding: 16px 18px;
-  background-image: var(--grid-fine);
-  overflow: hidden;
-}
-.thumb ol {
-  margin: 0;
-  padding-left: 20px;
-  font: 12px/1.5 var(--mono);
-  color: var(--muted);
-  display: grid;
-  gap: 4px;
-}
-.thumb li::marker {
-  color: var(--accent);
-  font-weight: 700;
 }

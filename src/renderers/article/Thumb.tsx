@@ -1,14 +1,7 @@
-import type { FieldcraftEntry } from "@/content/schema";
-import s from "./article.module.css";
+"use client";
+import type { ArticleEntry } from "./types";
+import { IllustrationThumb } from "../illustration/Illustration";
 
-export function ArticleThumb({ entry }: { entry: FieldcraftEntry }) {
-  return (
-    <div className={s.thumb} aria-hidden="true">
-      <ol>
-        {(entry.steps ?? []).slice(0, 4).map((st, i) => (
-          <li key={i}>{st.caption}</li>
-        ))}
-      </ol>
-    </div>
-  );
+export function ArticleThumb({ entry }: { entry: ArticleEntry }) {
+  return <IllustrationThumb id={entry.id} />;
 }

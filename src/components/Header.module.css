@@ -2,84 +2,49 @@
   position: sticky;
   top: 0;
   z-index: 10;
-  background: color-mix(in srgb, var(--bg) 90%, transparent);
+  background: color-mix(in srgb, var(--bg) 92%, transparent);
   backdrop-filter: blur(8px);
-  border-bottom: 2px solid var(--ink);
+  border-bottom: 1px solid var(--line);
 }
+/* Wide screens: logo sits in the left margin, search spans exactly the content column. */
 .row {
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr) minmax(0, var(--content)) minmax(0, 1fr);
   align-items: center;
-  gap: 24px;
-  padding-top: max(10px, env(safe-area-inset-top));
-  padding-bottom: 10px;
+  column-gap: var(--gutter);
+  padding: max(10px, env(safe-area-inset-top)) var(--gutter) 10px;
 }
 .brand {
+  justify-self: start;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 9px;
   text-decoration: none;
   white-space: nowrap;
 }
 .mark {
-  width: 32px;
-  height: 32px;
+  width: 26px;
+  height: 26px;
   flex: none;
 }
-.mark :global(.i) {
-  fill: var(--input);
-}
-.mark :global(.o) {
-  fill: var(--output);
-}
 .word {
-  font: 700 24px/1 var(--display);
+  font: 700 20px/1 var(--display);
   text-transform: uppercase;
   letter-spacing: 0.02em;
 }
 .word span {
   color: var(--muted);
 }
-.nav {
-  display: flex;
-  gap: 4px;
-}
-.nav a {
-  white-space: nowrap;
-  white-space: nowrap;
-}
-.nav a {
-  font: 600 11px/1 var(--mono);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  text-decoration: none;
-  padding: 8px 9px;
-  border-radius: 3px;
-  color: var(--muted);
-  border-bottom: 2px solid transparent;
-}
-.nav a:hover {
-  color: var(--ink);
-  border-bottom-color: var(--accent);
-}
-@media (max-width: 1080px) {
+/* Narrower: logo then search, both inside the content column. */
+@media (max-width: 1700px) {
   .row {
-    grid-template-columns: auto 1fr;
-    row-gap: 8px;
-  }
-  .nav {
-    grid-column: 1 / -1;
-    grid-row: 3;
-    overflow-x: auto;
-    margin: 0 -8px;
-    scrollbar-width: none;
+    grid-template-columns: auto minmax(0, 1fr);
+    max-width: calc(var(--content) + 2 * var(--gutter));
+    margin: 0 auto;
   }
 }
-@media (max-width: 560px) {
-  .row {
-    grid-template-columns: 1fr;
-  }
+@media (max-width: 640px) {
   .word {
-    font-size: 20px;
+    display: none;
   }
 }

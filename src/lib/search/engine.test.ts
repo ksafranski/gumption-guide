@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { getSearchIndex } from "@/lib/content";
-import { createSearch, groupByCategory } from "./engine";
+import { createSearch, groupByCategory, preferCategory } from "./engine";
 
 const { run } = createSearch(getSearchIndex());
 const ids = (q: string) => run(q)!.results.map((r) => r.doc.id);
@@ -40,5 +40,13 @@ describe("search", () => {
   it("groups results by category", () => {
     const groups = groupByCategory(run("tag:mechanical-advantage")!.results).map((g) => g.id);
     expect(new Set(groups)).toEqual(new Set(["mechanisms", "knots", "units"]));
+  });
+  it("puts the preferred category first", () => {
+    const res = run("tag:mechanical-advantage")!.results;
+    const out = preferCategory(res, "units");
+    expect(out).toHaveLength(res.length);
+    expect(out[0].doc.category).toBe("units");
+    expect(groupByCategory(out)[0].id).toBe("units");
+    expect(preferCategory(res, null)).toBe(res);
   });
 });

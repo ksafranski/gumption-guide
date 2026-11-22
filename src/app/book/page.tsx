@@ -17,7 +17,7 @@ export default function Book() {
       <section className={s.titlePage}>
         <p className="label">Field manual</p>
         <h1>Gumption Guide</h1>
-        <p>Mechanisms · Knots &amp; Lashings · Units &amp; Measures · Fieldcraft</p>
+        <p>Mechanisms · Knots &amp; Lashings · Units &amp; Measures · Fieldcraft · First Aid</p>
         <p className={s.printHint}>Print this page (Save as PDF) for the book.</p>
       </section>
 
@@ -51,7 +51,7 @@ export default function Book() {
             {getByCategory(c.id).map((e) => (
               <article key={e.id} id={e.id} className={s.entry}>
                 <h3>
-                  {e.title} {e.status === "draft" && <span className="draft">Unreviewed</span>}
+                  {e.title}
                 </h3>
                 <p className={s.meta}>
                   {entryBadges(e).join(" · ")}

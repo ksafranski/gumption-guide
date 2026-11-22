@@ -1,8 +1,8 @@
-import type { FieldcraftEntry } from "@/content/schema";
+import type { ArticleEntry } from "./types";
 import s from "./article.module.css";
 
 /** Steps, gear and safety for article-style entries. The MDX body is rendered by the page. */
-export function ArticleLive({ entry }: { entry: FieldcraftEntry }) {
+export function ArticleLive({ entry }: { entry: ArticleEntry }) {
   return (
     <div className={s.article}>
       {entry.gear?.length ? (
@@ -25,7 +25,17 @@ export function ArticleLive({ entry }: { entry: FieldcraftEntry }) {
           </ol>
         </section>
       ) : null}
-      {entry.safety?.length ? (
+      {"getHelp" in entry ? (
+        <section className={s.safety}>
+          <h3>Get help now if</h3>
+          <ul>
+            {entry.getHelp.map((x) => (
+              <li key={x}>{x}</li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
+      {"safety" in entry && entry.safety?.length ? (
         <section className={s.safety}>
           <h3>Safety</h3>
           <ul>

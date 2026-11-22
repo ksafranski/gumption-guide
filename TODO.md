@@ -5,6 +5,7 @@
 - **Knot text**: security/strength notes are general guidance, not ratings. Review before flipping any knot to `reviewed`.
 - **ABOK numbers**: only `bowline` → 1010 is set. Clove hitch, timber hitch, trucker's hitch and square lashing are left out until confirmed.
 - **Brown numbers** (`refs.brown`): none set for any of the 35 ported mechanisms. Need the movement numbers from the 1868 book.
+- **First aid** (placeholder section, both entries `draft`): `minor-burn` and `stop-bleeding` follow common lay first-aid guidance (20 minutes of cool running water; firm direct pressure, add pads on top). Needs review against a current source (e.g. Red Cross or NHS), with `sources` added, before flipping to `reviewed`. Consider a site-wide "not a substitute for training; call emergency services" notice on this section.
 - **Fieldcraft**: fire safety and find-north steps need a review pass. Units rules of thumb are approximations (marked ≈) and also need a look.
 
 ## Not built yet (from SETUP.md phases)

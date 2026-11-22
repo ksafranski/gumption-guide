@@ -26,7 +26,10 @@ for (let i = 0; i < 3; i++) {
   const xr = 186 + 11 * i;
   const xl = 134 - 11 * i;
   wraps.push(
-    { d: `M ${xr} 142 L ${xr} ${TOP + 6} C ${xr} ${TOP} ${xr - 4} ${TOP} ${xr - 10} ${TOP}`, z: 3 },
+    {
+      d: `M ${xr} ${i === 0 ? 142 : BOT} L ${xr} ${TOP + 6} C ${xr} ${TOP} ${xr - 4} ${TOP} ${xr - 10} ${TOP}`,
+      z: 3,
+    },
     { d: `M ${xr - 10} ${TOP} L ${xl + 10} ${TOP}`, back: true },
     {
       d: `M ${xl + 10} ${TOP} C ${xl + 4} ${TOP} ${xl} ${TOP} ${xl} ${TOP + 6} L ${xl} ${BOT} C ${xl} ${BOT + 6} ${xl + 4} ${BOT + 6} ${xl + 10} ${BOT + 6}`,

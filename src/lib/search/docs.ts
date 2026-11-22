@@ -24,6 +24,8 @@ function facets(e: Entry): Record<string, string[]> {
       return { kind: [e.quantity], unit: e.units.flatMap((u) => [u.name, u.symbol]) };
     case "fieldcraft":
       return { kind: [e.difficulty] };
+    case "first-aid":
+      return {};
   }
 }
 

@@ -55,6 +55,15 @@ export const CATEGORIES: Category[] = [
     facets: [{ field: "difficulty", label: "Difficulty" }],
     renderer: "article",
   },
+  {
+    id: "first-aid",
+    title: "First Aid",
+    short: "Aid",
+    blurb: "What to do in the first few minutes, and when to get help.",
+    order: 5,
+    facets: [],
+    renderer: "article",
+  },
 ];
 
 export const categoryById = Object.fromEntries(CATEGORIES.map((c) => [c.id, c])) as Record<

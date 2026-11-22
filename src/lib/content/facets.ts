@@ -25,5 +25,7 @@ export function entryBadges(e: Entry): string[] {
       return [cap(e.quantity)];
     case "fieldcraft":
       return [cap(e.difficulty)];
+    case "first-aid":
+      return [];
   }
 }

@@ -280,3 +280,10 @@ export function groupByCategory(results: Result[]) {
   }
   return [...groups.entries()].map(([id, g]) => ({ id, ...g }));
 }
+
+/** Stable-sort results so the given category comes first (the section the reader is in). */
+export function preferCategory(results: Result[], category: string | null | undefined) {
+  if (!category) return results;
+  const mine = results.filter((r) => r.doc.category === category);
+  return mine.length ? [...mine, ...results.filter((r) => r.doc.category !== category)] : results;
+}

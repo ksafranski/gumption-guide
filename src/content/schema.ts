@@ -6,7 +6,7 @@ import { z } from "zod";
 
 const kebab = z.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/, "must be kebab-case");
 
-export const CATEGORY_IDS = ["mechanisms", "knots", "units", "fieldcraft"] as const;
+export const CATEGORY_IDS = ["mechanisms", "knots", "units", "fieldcraft", "first-aid"] as const;
 export const CategoryId = z.enum(CATEGORY_IDS);
 export type CategoryId = z.infer<typeof CategoryId>;
 
@@ -104,11 +104,21 @@ export const FieldcraftEntry = z.object({
   safety: z.array(z.string()).optional(),
 });
 
+export const FirstAidEntry = z.object({
+  ...base,
+  category: z.literal("first-aid"),
+  gear: z.array(z.string()).optional(),
+  steps: z.array(Step).min(1),
+  /** When to call emergency services or get medical care. */
+  getHelp: z.array(z.string()).min(1),
+});
+
 export const Entry = z.discriminatedUnion("category", [
   MechanismEntry,
   KnotEntry,
   UnitsEntry,
   FieldcraftEntry,
+  FirstAidEntry,
 ]);
 
 export type Entry = z.infer<typeof Entry>;
@@ -116,6 +126,7 @@ export type MechanismEntry = z.infer<typeof MechanismEntry>;
 export type KnotEntry = z.infer<typeof KnotEntry>;
 export type UnitsEntry = z.infer<typeof UnitsEntry>;
 export type FieldcraftEntry = z.infer<typeof FieldcraftEntry>;
+export type FirstAidEntry = z.infer<typeof FirstAidEntry>;
 export type Unit = z.infer<typeof Unit>;
 export type EntryOf<C extends CategoryId> = Extract<Entry, { category: C }>;
 

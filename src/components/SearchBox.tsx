@@ -1,15 +1,25 @@
 "use client";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useId, useMemo, useRef, useState } from "react";
-import { groupByCategory } from "@/lib/search/engine";
+import { CATEGORIES, categoryById } from "@/content/categories";
+import type { CategoryId } from "@/content/schema";
+import { groupByCategory, preferCategory } from "@/lib/search/engine";
 import { Highlight } from "./Highlight";
 import { useSearchEngine } from "./useSearch";
 import s from "./SearchBox.module.css";
 
 const LIMIT = 12;
 
-export function SearchBox() {
+/** The section the reader is in, from the first path segment. */
+function useSection() {
+  const seg = usePathname().split("/")[1] as CategoryId;
+  return categoryById[seg] ?? null;
+}
+
+export function SearchBox({ counts }: { counts: Record<string, number> }) {
   const router = useRouter();
+  const section = useSection();
   const [q, setQ] = useState("");
   const [open, setOpen] = useState(false);
   const [sel, setSel] = useState(-1);
@@ -19,7 +29,10 @@ export function SearchBox() {
   const listId = useId();
 
   const res = useMemo(() => (engine && q.trim() ? engine.run(q) : null), [engine, q]);
-  const flat = useMemo(() => (res?.results ?? []).slice(0, LIMIT), [res]);
+  const flat = useMemo(
+    () => preferCategory(res?.results ?? [], section?.id).slice(0, LIMIT),
+    [res, section],
+  );
   const groups = useMemo(() => groupByCategory(flat), [flat]);
 
   useEffect(() => {
@@ -55,42 +68,48 @@ export function SearchBox() {
     } else if (e.key === "Enter") {
       e.preventDefault();
       if (sel >= 0 && flat[sel]) go(flat[sel].doc.href);
-      else if (q.trim()) go(`/search?q=${encodeURIComponent(q.trim())}`);
+      else if (q.trim())
+        go(`/search?q=${encodeURIComponent(q.trim())}${section ? `&in=${section.id}` : ""}`);
     }
   };
 
   return (
-    <div className={s.search}>
-      <svg viewBox="0 0 20 20" aria-hidden="true">
-        <circle cx="8.5" cy="8.5" r="5.5" />
-        <path d="M13 13l4 4" />
-      </svg>
-      <input
-        ref={input}
-        type="search"
-        value={q}
-        placeholder="Search knots, gears, units…"
-        autoComplete="off"
-        spellCheck={false}
-        role="combobox"
-        aria-expanded={open && !!q}
-        aria-controls={listId}
-        aria-autocomplete="list"
-        aria-activedescendant={sel >= 0 ? `${listId}-${sel}` : undefined}
-        aria-label="Search the guide"
-        onFocus={() => {
-          setWanted(true);
-          setOpen(true);
-        }}
-        onBlur={() => setTimeout(() => setOpen(false), 120)}
-        onChange={(e) => {
-          setQ(e.target.value);
-          setSel(-1);
-          setOpen(true);
-        }}
-        onKeyDown={onKey}
-      />
-      <kbd>/</kbd>
+    <div className={s.search} data-cat={section?.id}>
+      <div className={s.field}>
+        <svg viewBox="0 0 20 20" aria-hidden="true">
+          <circle cx="8.5" cy="8.5" r="5.5" />
+          <path d="M13 13l4 4" />
+        </svg>
+        <input
+          ref={input}
+          type="search"
+          value={q}
+          placeholder={
+            section ? `Search ${section.title.toLowerCase()} first…` : "Search everything…"
+          }
+          autoComplete="off"
+          spellCheck={false}
+          role="combobox"
+          aria-expanded={open && !!q}
+          aria-controls={listId}
+          aria-autocomplete="list"
+          aria-activedescendant={sel >= 0 ? `${listId}-${sel}` : undefined}
+          aria-label="Search the guide"
+          onFocus={() => {
+            setWanted(true);
+            setOpen(true);
+          }}
+          onBlur={() => setTimeout(() => setOpen(false), 120)}
+          onChange={(e) => {
+            setQ(e.target.value);
+            setSel(-1);
+            setOpen(true);
+          }}
+          onKeyDown={onKey}
+        />
+        <kbd>/</kbd>
+      </div>
+      <SectionMenu current={section?.id ?? null} counts={counts} />
       {open && q.trim() && (
         <div id={listId} className={s.suggest} role="listbox">
           {res?.corrected && (
@@ -136,6 +155,79 @@ export function SearchBox() {
             <span>↵ all results</span>
           </div>
         </div>
+      )}
+    </div>
+  );
+}
+
+/** Section picker: shows where you are, jumps to another section. */
+function SectionMenu({
+  current,
+  counts,
+}: {
+  current: CategoryId | null;
+  counts: Record<string, number>;
+}) {
+  const [open, setOpen] = useState(false);
+  const root = useRef<HTMLDivElement>(null);
+  const menuId = useId();
+  const label = current ? categoryById[current].title : "All sections";
+
+  useEffect(() => {
+    if (!open) return;
+    const close = (e: Event) => {
+      if (
+        e instanceof KeyboardEvent ? e.key === "Escape" : !root.current?.contains(e.target as Node)
+      )
+        setOpen(false);
+    };
+    addEventListener("pointerdown", close);
+    addEventListener("keydown", close);
+    return () => {
+      removeEventListener("pointerdown", close);
+      removeEventListener("keydown", close);
+    };
+  }, [open]);
+
+  return (
+    <div ref={root} className={s.scope}>
+      <button
+        type="button"
+        className={s.scopeBtn}
+        aria-haspopup="menu"
+        aria-expanded={open}
+        aria-controls={menuId}
+        aria-label={`Section: ${label}`}
+        onClick={() => setOpen((o) => !o)}
+      >
+        <span className={s.dot} aria-hidden="true" />
+        <span className={s.scopeLabel}>{label}</span>
+        <svg viewBox="0 0 10 6" aria-hidden="true">
+          <path d="M1 1l4 4 4-4" />
+        </svg>
+      </button>
+      {open && (
+        <ul id={menuId} className={s.menu} role="menu">
+          <li role="none">
+            <Link role="menuitem" href="/" aria-current={!current} onClick={() => setOpen(false)}>
+              All sections
+            </Link>
+          </li>
+          {CATEGORIES.map((c) => (
+            <li role="none" key={c.id} data-cat={c.id}>
+              <Link
+                role="menuitem"
+                href={`/${c.id}`}
+                aria-current={current === c.id}
+                onClick={() => setOpen(false)}
+              >
+                <span className={s.dot} aria-hidden="true" />
+                {c.title}
+                <span className={s.n}>{counts[c.id] ?? 0}</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
       )}
     </div>
   );

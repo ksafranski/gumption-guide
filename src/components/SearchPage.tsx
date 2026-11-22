@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
-import { groupByCategory } from "@/lib/search/engine";
+import { groupByCategory, preferCategory } from "@/lib/search/engine";
 import { Highlight } from "./Highlight";
 import { useSearchEngine } from "./useSearch";
 import s from "./SearchPage.module.css";
@@ -20,7 +20,8 @@ export function SearchPage() {
   }
   const engine = useSearchEngine();
   const res = engine && q.trim() ? engine.run(q) : null;
-  const groups = res ? groupByCategory(res.results) : [];
+  const prefer = params.get("in");
+  const groups = res ? groupByCategory(preferCategory(res.results, prefer)) : [];
 
   return (
     <div>
@@ -33,7 +34,10 @@ export function SearchPage() {
         placeholder="e.g. tag:mechanical-advantage"
         onChange={(e) => {
           setQ(e.target.value);
-          router.replace(`/search?q=${encodeURIComponent(e.target.value)}`, { scroll: false });
+          const inParam = prefer ? `&in=${encodeURIComponent(prefer)}` : "";
+          router.replace(`/search?q=${encodeURIComponent(e.target.value)}${inParam}`, {
+            scroll: false,
+          });
         }}
       />
       {res?.corrected && (
