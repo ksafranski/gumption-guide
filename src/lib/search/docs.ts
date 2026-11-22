@@ -28,6 +28,8 @@ function facets(e: Entry): Record<string, string[]> {
       return {};
     case "building":
     case "garden":
+    case "home":
+    case "workshop":
       return { kind: [e.kind], ref: (e.reference ?? []).map((r) => r.term) };
   }
 }

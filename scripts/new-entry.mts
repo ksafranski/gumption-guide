@@ -3,7 +3,17 @@ import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
 const [category, id] = process.argv.slice(2);
-const CATS = ["mechanisms", "knots", "units", "fieldcraft", "first-aid", "building", "garden"];
+const CATS = [
+  "mechanisms",
+  "knots",
+  "units",
+  "fieldcraft",
+  "first-aid",
+  "building",
+  "garden",
+  "home",
+  "workshop",
+];
 if (!category || !id || !CATS.includes(category) || !/^[a-z0-9]+(-[a-z0-9]+)*$/.test(id)) {
   console.error(`usage: pnpm new <${CATS.join("|")}> <kebab-id>`);
   process.exit(1);
@@ -23,6 +33,8 @@ const extra: Record<string, string> = {
   "first-aid": `  steps: [{ caption: "TODO" }],\n  getHelp: ["TODO"],\n`,
   building: `  kind: "fastener",\n  reference: [],\n`,
   garden: `  kind: "care",\n  reference: [],\n`,
+  home: `  kind: "repair",\n  reference: [],\n`,
+  workshop: `  kind: "joinery",\n  reference: [],\n`,
 };
 
 const entry = `import { defineEntry } from "@/content/schema";

@@ -28,6 +28,8 @@ export function entryBadges(e: Entry): string[] {
     case "first-aid":
       return [];
     case "building":
+    case "home":
+    case "workshop":
       return [cap(e.kind), ...(e.difficulty ? [cap(e.difficulty)] : [])];
     case "garden":
       return [cap(e.kind), ...(e.season ? [e.season] : [])];

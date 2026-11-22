@@ -36,6 +36,8 @@
   --c-first-aid: #e5615a;
   --c-building: #6fa3d9;
   --c-garden: #5fbf8f;
+  --c-home: #c98bd9;
+  --c-workshop: #d08a5a;
   --accent: var(--ink);
 
   --grid:
@@ -92,6 +94,8 @@
   --c-first-aid: #b3261e;
   --c-building: #2d5f94;
   --c-garden: #23724a;
+  --c-home: #7a3f8c;
+  --c-workshop: #8f4a1c;
   --grid-line: rgb(31 29 26 / 0.045);
   --grid-line-fine: rgb(31 90 166 / 0.05);
   color-scheme: light;
@@ -117,6 +121,12 @@
 }
 [data-cat="garden"] {
   --accent: var(--c-garden);
+}
+[data-cat="home"] {
+  --accent: var(--c-home);
+}
+[data-cat="workshop"] {
+  --accent: var(--c-workshop);
 }
 
 * {

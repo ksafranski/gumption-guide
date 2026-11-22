@@ -14,6 +14,8 @@ export const CATEGORY_IDS = [
   "first-aid",
   "building",
   "garden",
+  "home",
+  "workshop",
 ] as const;
 export const CategoryId = z.enum(CATEGORY_IDS);
 export type CategoryId = z.infer<typeof CategoryId>;
@@ -149,6 +151,30 @@ export const GardenEntry = z.object({
   safety: z.array(z.string()).optional(),
 });
 
+export const HOME_KINDS = ["electrical", "plumbing", "repair"] as const;
+export const HomeEntry = z.object({
+  ...base,
+  category: z.literal("home"),
+  kind: z.enum(HOME_KINDS),
+  difficulty: z.enum(["easy", "moderate", "hard"]).optional(),
+  reference: z.array(RefRow).optional(),
+  gear: z.array(z.string()).optional(),
+  steps: z.array(Step).optional(),
+  safety: z.array(z.string()).optional(),
+});
+
+export const WORKSHOP_KINDS = ["joinery", "electronics", "finishing"] as const;
+export const WorkshopEntry = z.object({
+  ...base,
+  category: z.literal("workshop"),
+  kind: z.enum(WORKSHOP_KINDS),
+  difficulty: z.enum(["easy", "moderate", "hard"]).optional(),
+  reference: z.array(RefRow).optional(),
+  gear: z.array(z.string()).optional(),
+  steps: z.array(Step).optional(),
+  safety: z.array(z.string()).optional(),
+});
+
 export const Entry = z.discriminatedUnion("category", [
   MechanismEntry,
   KnotEntry,
@@ -157,6 +183,8 @@ export const Entry = z.discriminatedUnion("category", [
   FirstAidEntry,
   BuildingEntry,
   GardenEntry,
+  HomeEntry,
+  WorkshopEntry,
 ]);
 
 export type Entry = z.infer<typeof Entry>;
@@ -167,6 +195,8 @@ export type FieldcraftEntry = z.infer<typeof FieldcraftEntry>;
 export type FirstAidEntry = z.infer<typeof FirstAidEntry>;
 export type BuildingEntry = z.infer<typeof BuildingEntry>;
 export type GardenEntry = z.infer<typeof GardenEntry>;
+export type HomeEntry = z.infer<typeof HomeEntry>;
+export type WorkshopEntry = z.infer<typeof WorkshopEntry>;
 export type Unit = z.infer<typeof Unit>;
 export type EntryOf<C extends CategoryId> = Extract<Entry, { category: C }>;
 

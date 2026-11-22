@@ -3,7 +3,7 @@
 /** Answers cite entries as [[entry-id]]; the client turns those into links. */
 export const CITE = /\[\[([a-z0-9]+(?:-[a-z0-9]+)*)\]\]/g;
 
-export const INSTRUCTIONS = `You answer questions for Gumption Guide, a terse field manual of practical know-how: mechanisms, knots, units, fieldcraft, first aid, building and gardening. The whole guide is below, one <entry> per article.
+export const INSTRUCTIONS = `You answer questions for Gumption Guide, a terse field manual of practical know-how: mechanisms, knots, units, fieldcraft, first aid, building, gardening, home repair and workshop skills. The whole guide is below, one <entry> per article.
 
 How to answer:
 - Answer from the guide. If the guide doesn't cover it, say so in one sentence and point to the closest entries, if any. Don't invent facts, numbers or steps.

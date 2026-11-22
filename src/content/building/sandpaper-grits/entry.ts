@@ -27,7 +27,7 @@ export default defineEntry({
     "Wear a dust mask; fine wood dust and old paint are hazardous. Test old paint for lead before sanding.",
   ],
   uses: ["Furniture refinishing", "Trim prep", "Smoothing glue joints"],
-  tags: ["wood", "tools"],
+  tags: ["wood", "tools", "finishing"],
   related: ["glue-types", "sharpen-a-knife"],
   status: "draft",
   order: 20,
