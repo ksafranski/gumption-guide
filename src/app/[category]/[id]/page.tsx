@@ -8,6 +8,7 @@ import { entryBadges } from "@/lib/content/facets";
 import { getAllEntries, getBacklinks, getByCategory, getEntry, getRelated } from "@/lib/content";
 import { renderers } from "@/renderers";
 import { EntryCard } from "@/components/EntryCard";
+import { IllustrationFigure } from "@/renderers/illustration/Illustration";
 import s from "./entry.module.css";
 
 type Props = { params: Promise<{ category: string; id: string }> };
@@ -44,6 +45,8 @@ async function EntryView({ params }: Props) {
   const prev = siblings[at - 1];
   const next = siblings[at + 1];
   const isArticle = cat.renderer === "article";
+  // Mechanisms and knots draw a live diagram; everything else gets its static illustration.
+  const hasArt = isArticle || cat.renderer === "units";
 
   return (
     <article className="wrap" data-cat={e.category}>
@@ -52,6 +55,7 @@ async function EntryView({ params }: Props) {
       </nav>
       <div className={`${s.grid} ${isArticle ? s.article : ""}`}>
         <div className={s.stage}>
+          {hasArt ? <IllustrationFigure id={e.id} /> : null}
           {isArticle && Body ? (
             <div className={`prose ${s.body}`}>
               <Body />

@@ -194,4 +194,8 @@
   .stage {
     position: static;
   }
+  /* Title and rule of thumb first on narrow screens; the long reference follows. */
+  .article .info {
+    order: -1;
+  }
 }

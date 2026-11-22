@@ -18,3 +18,13 @@ export function IllustrationThumb({ id }: { id: string }) {
     </div>
   );
 }
+
+/** Large framed illustration for the entry page (categories without a live diagram). */
+export function IllustrationFigure({ id }: { id: string }) {
+  const art = useRender<Illustration>(id);
+  return (
+    <figure className={s.figure} aria-hidden="true">
+      {art?.()}
+    </figure>
+  );
+}
