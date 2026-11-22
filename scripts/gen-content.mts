@@ -1,6 +1,6 @@
 // Scans src/content/<category>/<id>/ and writes import registries to
 // src/content/_generated/. Run automatically by dev/build/test/typecheck.
-import { readdirSync, existsSync, mkdirSync, writeFileSync, statSync } from "node:fs";
+import { readdirSync, existsSync, mkdirSync, readFileSync, writeFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 
 const root = join(import.meta.dirname, "..", "src", "content");
@@ -48,8 +48,28 @@ const bodies =
     .join("\n") +
   `\n};\n`;
 
+// Plain text of each MDX body, for the AI corpus (no imports, exports or JSX tags).
+const mdxText = (file: string) =>
+  readFileSync(file, "utf8")
+    .split("\n")
+    .filter((l) => !/^(import|export)\s/.test(l))
+    .join("\n")
+    .replace(/<\/?[A-Z][^>]*>/g, "")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
+
+const bodyText =
+  header +
+  `// MDX bodies as plain text, for server-side use (the "ask" corpus).\nexport const bodyText: Record<string, string> = {\n` +
+  found
+    .filter((e) => e.body)
+    .map((e) => `  ${q(e.id)}: ${q(mdxText(join(root, e.category, e.id, "body.mdx")))},`)
+    .join("\n") +
+  `\n};\n`;
+
 mkdirSync(out, { recursive: true });
 writeFileSync(join(out, "entries.ts"), entries);
 writeFileSync(join(out, "renders.ts"), renders);
 writeFileSync(join(out, "bodies.ts"), bodies);
+writeFileSync(join(out, "bodyText.ts"), bodyText);
 console.log(`gen-content: ${found.length} entries`);

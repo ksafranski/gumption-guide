@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { bodyText } from "@/content/_generated/bodyText";
 import { getAllEntries, getEntry } from "@/lib/content";
 import { buildCorpus, entryText } from "./corpus";
 import { citations, segments } from "./prompt";
@@ -22,6 +23,16 @@ describe("ask corpus", () => {
     expect(t).toContain("summary: A fixed loop");
     expect(t).toMatch(/steps:\n1\. /);
     expect(t).not.toContain("refs");
+  });
+
+  it("includes MDX bodies as plain text", () => {
+    const withBodies = buildCorpus(getAllEntries(), bodyText);
+    for (const id of Object.keys(bodyText)) {
+      const block = withBodies.split(`<entry id="${id}"`)[1].split("</entry>")[0];
+      expect(block).toContain(`article:\n${bodyText[id]}`);
+    }
+    expect(withBodies).toContain("Polaris");
+    expect(withBodies).not.toMatch(/^(import|export)\s/m);
   });
 
   it("stays small enough to cache cheaply", () => {

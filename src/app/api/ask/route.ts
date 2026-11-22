@@ -1,4 +1,5 @@
 import Anthropic from "@anthropic-ai/sdk";
+import { bodyText } from "@/content/_generated/bodyText";
 import { categoryById } from "@/content/categories";
 import type { CategoryId } from "@/content/schema";
 import { buildCorpus } from "@/lib/ai/corpus";
@@ -13,7 +14,7 @@ const MAX_QUESTION = 300;
 // Built once per server instance. Identical bytes on every request = cache hits.
 const SYSTEM: Anthropic.TextBlockParam[] = [
   { type: "text", text: INSTRUCTIONS },
-  { type: "text", text: buildCorpus(getAllEntries()), cache_control: { type: "ephemeral" } },
+  { type: "text", text: buildCorpus(getAllEntries(), bodyText), cache_control: { type: "ephemeral" } },
 ];
 
 /** AI Gateway auth: an explicit key, else the Vercel OIDC token of this deployment. */

@@ -8,6 +8,8 @@
   --line: #2f2c28;
   --line-strong: #403c36;
   --part: #2a2824;
+  --raised: #292622; /* floating panels: search, menus */
+  --scrim: rgb(0 0 0 / 0.55);
   --ground: #6f695f;
   --input: #ff8a4c;
   --input-fill: #3d2517;
@@ -65,6 +67,8 @@
   --line: #d8d1c2;
   --line-strong: #c4bba8;
   --part: #e6e0d2;
+  --raised: #fffdf8;
+  --scrim: rgb(31 29 26 / 0.28);
   --ground: #958e7f;
   --input: #d4520f;
   --input-fill: #f8dcc8;

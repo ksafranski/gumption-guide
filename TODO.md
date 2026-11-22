@@ -26,7 +26,6 @@
 - Units entries are marked `draft` too (not safety-critical; flip once checked).
 
 ## Ask the guide (AI answers)
-- `/api/ask` sends the whole corpus (~43K tokens) as a cached system block to `anthropic/claude-haiku-5.5` via Vercel AI Gateway. Needs `AI_GATEWAY_API_KEY` locally; on Vercel the OIDC token works.
-- MDX bodies (`find-north`, `fire-lay`) aren't in the corpus yet, only their `entry.ts` fields.
+- `/api/ask` sends the whole corpus (~69K tokens; cache hits confirmed locally) as a cached system block to `anthropic/claude-haiku-5.5` via Vercel AI Gateway. Needs `AI_GATEWAY_API_KEY` locally; on Vercel the OIDC token works.
 - Set an AI Gateway budget and a WAF rate-limit rule on `/api/ask` before launch; the endpoint is public.
-- Check `cache_read` in the `[ask]` log lines after deploy to confirm caching works through the gateway.
+- Check `cache_read` in the `[ask]` log lines after deploy too (works locally through the gateway).

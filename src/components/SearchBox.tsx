@@ -126,7 +126,11 @@ export function SearchBox({ counts }: { counts: Record<string, number> }) {
   };
 
   return (
-    <div className={s.search} data-cat={section?.id}>
+    <div
+      className={s.search}
+      data-cat={section?.id}
+      data-open={open && (ask || q.trim()) ? "" : undefined}
+    >
       <div className={s.field}>
         <svg viewBox="0 0 20 20" aria-hidden="true">
           <circle cx="8.5" cy="8.5" r="5.5" />

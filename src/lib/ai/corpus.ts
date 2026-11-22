@@ -32,7 +32,8 @@ function value(k: string, v: unknown): string | null {
   return "\n" + lines.join("\n");
 }
 
-export function entryText(e: Entry): string {
+/** `article` is the entry's long-form MDX body as plain text, if it has one. */
+export function entryText(e: Entry, article?: string): string {
   const head = `<entry id="${e.id}" section="${categoryById[e.category].title}" title="${e.title}"${
     e.status === "draft" ? ' unreviewed="true"' : ""
   }>`;
@@ -43,14 +44,15 @@ export function entryText(e: Entry): string {
       return s == null ? null : `${label(k)}:${s.startsWith("\n") ? "" : " "}${s}`;
     })
     .filter(Boolean);
+  if (article) body.push(`article:\n${article}`);
   if (e.related?.length) body.push(`see also: ${e.related.join(", ")}`);
   return [head, ...body, "</entry>"].join("\n");
 }
 
 /** All entries, ordered by section then id so the text never reshuffles between builds. */
-export function buildCorpus(entries: Entry[]): string {
+export function buildCorpus(entries: Entry[], articles: Record<string, string> = {}): string {
   return [...entries]
     .sort((a, b) => a.category.localeCompare(b.category) || a.id.localeCompare(b.id))
-    .map(entryText)
+    .map((e) => entryText(e, articles[e.id]))
     .join("\n\n");
 }
