@@ -1,0 +1,165 @@
+.live {
+  margin: 0;
+}
+.viewport {
+  background: var(--surface);
+  border: 1.5px solid var(--line-strong);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background-image: var(--grid-fine);
+}
+.stage {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  cursor: pointer;
+}
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 2px 0;
+}
+.btn {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--line-strong);
+  background: var(--surface);
+  color: var(--ink);
+  cursor: pointer;
+}
+.btn:hover {
+  border-color: var(--ink);
+}
+.btn svg {
+  width: 14px;
+  height: 14px;
+  fill: currentColor;
+}
+.ctl {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font: 500 11px/1 var(--mono);
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.ctl output {
+  width: 38px;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+.ctl input {
+  width: 100%;
+  accent-color: var(--input);
+}
+.grow {
+  flex: 1;
+}
+.speed input {
+  width: 80px;
+}
+.graph {
+  margin-top: 12px;
+  padding: 10px 12px 6px;
+  border: 1.5px solid var(--line-strong);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+.glabel {
+  display: flex;
+  justify-content: space-between;
+  font: 500 10.5px/1.4 var(--mono);
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.graph canvas {
+  display: block;
+  width: 100%;
+  height: 84px;
+}
+.legend {
+  display: flex;
+  gap: 16px;
+  padding: 10px 2px 0;
+  font: 500 10.5px/1 var(--mono);
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.legend i {
+  width: 11px;
+  height: 11px;
+  border: 1.5px solid;
+  border-radius: 2px;
+}
+.swIn {
+  background: var(--input-fill);
+  border-color: var(--input) !important;
+}
+.swOut {
+  background: var(--output-fill);
+  border-color: var(--output) !important;
+}
+.swGr {
+  background: var(--part);
+  border-color: var(--ground) !important;
+}
+
+.thumb {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+}
+
+.print {
+  break-inside: avoid;
+}
+.frames {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+.frames figure,
+.printGraph {
+  margin: 0;
+}
+.frames canvas {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border: 1px solid var(--line-strong);
+  border-radius: 3px;
+}
+.frames figcaption,
+.printGraph figcaption {
+  font: 500 10px/1.6 var(--mono);
+  color: var(--muted);
+  text-align: center;
+}
+.printGraph {
+  margin-top: 8px;
+}
+.printGraph canvas {
+  display: block;
+  width: 100%;
+  height: 60px;
+  border: 1px solid var(--line-strong);
+  border-radius: 3px;
+}
+@media (max-width: 560px) {
+  .speed {
+    display: none;
+  }
+}

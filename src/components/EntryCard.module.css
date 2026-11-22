@@ -1,0 +1,67 @@
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  background: var(--surface);
+  border: 1.5px solid var(--line-strong);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition:
+    border-color 0.12s,
+    transform 0.12s,
+    box-shadow 0.12s;
+}
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 4px;
+  background: var(--accent);
+  z-index: 1;
+}
+.card:hover {
+  border-color: var(--ink);
+  box-shadow: 3px 3px 0 var(--line-strong);
+  transform: translate(-1px, -1px);
+}
+.thumb {
+  border-bottom: 1.5px dashed var(--line-strong);
+}
+.meta {
+  padding: 10px 14px 14px 16px;
+}
+.tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  min-height: 0;
+}
+.tags:not(:empty) {
+  margin-bottom: 8px;
+}
+.meta h3 {
+  margin: 0;
+  font-size: 21px;
+  line-height: 1.05;
+}
+.meta p {
+  margin: 5px 0 0;
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--muted);
+}
+.compact .meta {
+  padding: 8px 10px 10px 13px;
+}
+.compact .meta h3 {
+  font-size: 17px;
+}
+@media (max-width: 560px) {
+  .meta h3 {
+    font-size: 18px;
+  }
+  .meta p {
+    display: none;
+  }
+}

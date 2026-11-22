@@ -1,0 +1,61 @@
+.input {
+  width: 100%;
+  height: 52px;
+  padding: 0 16px;
+  font: 500 18px var(--mono);
+  color: var(--ink);
+  background: var(--surface);
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-sm);
+  outline: none;
+}
+.note {
+  color: var(--muted);
+  font: 12px var(--mono);
+  margin: 12px 0;
+}
+.group {
+  margin-top: 24px;
+}
+.group h2 {
+  font: 700 11px/1 var(--mono);
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  margin: 0 0 8px;
+  padding-bottom: 6px;
+  border-bottom: 1.5px solid var(--ink);
+}
+.group ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.group li a {
+  display: grid;
+  gap: 2px;
+  padding: 10px 4px;
+  text-decoration: none;
+  border-bottom: 1px dashed var(--line-strong);
+}
+.group li a:hover {
+  background: var(--surface);
+}
+.group b {
+  font: 700 20px/1.1 var(--display);
+  text-transform: uppercase;
+}
+.via {
+  font: 12px var(--mono);
+  color: var(--muted);
+}
+.sum {
+  font-size: 14px;
+  color: var(--muted);
+}
+.group mark,
+.via mark,
+.sum mark {
+  background: var(--tape);
+  color: var(--tape-ink);
+  border-radius: 2px;
+}
