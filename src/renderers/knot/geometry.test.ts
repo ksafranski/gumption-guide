@@ -4,13 +4,34 @@ import clove from "@/content/knots/clove-hitch/render";
 import squareLashing from "@/content/knots/square-lashing/render";
 import timber from "@/content/knots/timber-hitch/render";
 import truckers from "@/content/knots/truckers-hitch/render";
+import overhand from "@/content/knots/overhand-knot/render";
+import figureEight from "@/content/knots/figure-eight-knot/render";
+import twoHalf from "@/content/knots/two-half-hitches/render";
+import sheetBend from "@/content/knots/sheet-bend/render";
+import roundTurn from "@/content/knots/round-turn-two-half-hitches/render";
+import tautLine from "@/content/knots/taut-line-hitch/render";
+import shearLashing from "@/content/knots/shear-lashing/render";
 import { endOf, firstPoint, lastPoint, smoothJoints } from "./geometry";
 
-const knots = { bowline, clove, squareLashing, timber, truckers };
+const knots = {
+  bowline,
+  clove,
+  squareLashing,
+  timber,
+  truckers,
+  overhand,
+  figureEight,
+  twoHalf,
+  sheetBend,
+  roundTurn,
+  tautLine,
+  shearLashing,
+};
 
 describe("knot geometry", () => {
   it.each(Object.entries(knots))("%s: each segment starts where the last one ended", (_, k) => {
     for (let i = 1; i < k.segs.length; i++) {
+      if (k.segs[i].start) continue;
       const [ax, ay] = lastPoint(k.segs[i - 1].d);
       const [bx, by] = firstPoint(k.segs[i].d);
       expect(Math.hypot(ax - bx, ay - by), `seg ${i - 1} -> ${i}`).toBeLessThan(0.5);

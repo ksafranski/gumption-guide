@@ -14,7 +14,7 @@ const mono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono" });
 export const metadata: Metadata = {
   metadataBase: new URL("https://gumption.guide"),
   title: { default: "Gumption Guide", template: "%s · Gumption Guide" },
-  description: "A field manual for practical know-how: mechanisms, knots, units, fieldcraft and first aid.",
+  description: "A field manual for practical know-how: mechanisms, knots, units, fieldcraft, first aid, building and gardening.",
   icons: {
     icon: [
       { url: "/icons/icon.svg?v=2", type: "image/svg+xml" },

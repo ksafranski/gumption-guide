@@ -31,7 +31,7 @@ describe("search", () => {
     expect(ids("tag:mechanical-advantage")).toEqual(
       expect.arrayContaining(["truckers-hitch", "differential-windlass", "block-tackle", "force"]),
     );
-    expect(ids("category:units tag:mechanical-advantage")).toEqual(["force"]);
+    expect(ids("category:units tag:mechanical-advantage").sort()).toEqual(["force", "torque"]);
   });
   it("supports /regex/", () => {
     expect(ids("/^tim/")).toContain("timber-hitch");
@@ -39,7 +39,7 @@ describe("search", () => {
   });
   it("groups results by category", () => {
     const groups = groupByCategory(run("tag:mechanical-advantage")!.results).map((g) => g.id);
-    expect(new Set(groups)).toEqual(new Set(["mechanisms", "knots", "units"]));
+    expect(new Set(groups)).toEqual(new Set(["mechanisms", "knots", "units", "fieldcraft"]));
   });
   it("puts the preferred category first", () => {
     const res = run("tag:mechanical-advantage")!.results;

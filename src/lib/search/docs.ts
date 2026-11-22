@@ -26,6 +26,9 @@ function facets(e: Entry): Record<string, string[]> {
       return { kind: [e.difficulty] };
     case "first-aid":
       return {};
+    case "building":
+    case "garden":
+      return { kind: [e.kind], ref: (e.reference ?? []).map((r) => r.term) };
   }
 }
 

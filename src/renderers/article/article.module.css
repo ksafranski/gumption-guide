@@ -69,3 +69,32 @@
   display: grid;
   gap: 6px;
 }
+.ref {
+  margin: 0;
+  display: grid;
+}
+.ref > div {
+  display: grid;
+  grid-template-columns: minmax(110px, 30%) 1fr;
+  gap: 14px;
+  padding: 10px 0;
+  border-top: 1px dashed var(--line-strong);
+}
+.ref > div:last-child {
+  border-bottom: 1px dashed var(--line-strong);
+}
+.ref dt {
+  font: 600 13px/1.4 var(--mono);
+  color: var(--accent);
+}
+.ref dd {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.45;
+}
+@media (max-width: 520px) {
+  .ref > div {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+}

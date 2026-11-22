@@ -32,6 +32,8 @@
   --c-units: #e8b923;
   --c-fieldcraft: #84b56f;
   --c-first-aid: #e5615a;
+  --c-building: #6fa3d9;
+  --c-garden: #5fbf8f;
   --accent: var(--ink);
 
   --grid:
@@ -84,6 +86,8 @@
   --c-units: #b8860b;
   --c-fieldcraft: #3f6b35;
   --c-first-aid: #b3261e;
+  --c-building: #2d5f94;
+  --c-garden: #23724a;
   --grid-line: rgb(31 29 26 / 0.045);
   --grid-line-fine: rgb(31 90 166 / 0.05);
   color-scheme: light;
@@ -103,6 +107,12 @@
 }
 [data-cat="first-aid"] {
   --accent: var(--c-first-aid);
+}
+[data-cat="building"] {
+  --accent: var(--c-building);
+}
+[data-cat="garden"] {
+  --accent: var(--c-garden);
 }
 
 * {

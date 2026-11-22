@@ -1,4 +1,4 @@
-import type { FieldcraftEntry, FirstAidEntry } from "@/content/schema";
+import type { BuildingEntry, FieldcraftEntry, FirstAidEntry, GardenEntry } from "@/content/schema";
 
 /** Categories drawn as an illustrated article: kit, steps and warnings. */
-export type ArticleEntry = FieldcraftEntry | FirstAidEntry;
+export type ArticleEntry = FieldcraftEntry | FirstAidEntry | BuildingEntry | GardenEntry;

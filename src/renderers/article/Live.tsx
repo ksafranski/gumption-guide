@@ -5,6 +5,19 @@ import s from "./article.module.css";
 export function ArticleLive({ entry }: { entry: ArticleEntry }) {
   return (
     <div className={s.article}>
+      {"reference" in entry && entry.reference?.length ? (
+        <section>
+          <h3>At a glance</h3>
+          <dl className={s.ref}>
+            {entry.reference.map((r) => (
+              <div key={r.term}>
+                <dt>{r.term}</dt>
+                <dd>{r.detail}</dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+      ) : null}
       {entry.gear?.length ? (
         <section className={s.gear}>
           <h3>Kit</h3>

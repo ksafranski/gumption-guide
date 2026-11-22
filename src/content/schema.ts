@@ -6,11 +6,21 @@ import { z } from "zod";
 
 const kebab = z.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/, "must be kebab-case");
 
-export const CATEGORY_IDS = ["mechanisms", "knots", "units", "fieldcraft", "first-aid"] as const;
+export const CATEGORY_IDS = [
+  "mechanisms",
+  "knots",
+  "units",
+  "fieldcraft",
+  "first-aid",
+  "building",
+  "garden",
+] as const;
 export const CategoryId = z.enum(CATEGORY_IDS);
 export type CategoryId = z.infer<typeof CategoryId>;
 
 const Step = z.object({ caption: z.string().min(1) });
+/** A compare-at-a-glance row: a type or term and when/why you'd use it. */
+const RefRow = z.object({ term: z.string().min(1), detail: z.string().min(1) });
 
 const base = {
   id: kebab,
@@ -113,12 +123,40 @@ export const FirstAidEntry = z.object({
   getHelp: z.array(z.string()).min(1),
 });
 
+export const BUILDING_KINDS = ["fastener", "framing", "material", "technique"] as const;
+export const BuildingEntry = z.object({
+  ...base,
+  category: z.literal("building"),
+  kind: z.enum(BUILDING_KINDS),
+  difficulty: z.enum(["easy", "moderate", "hard"]).optional(),
+  /** Types or terms compared at a glance. */
+  reference: z.array(RefRow).optional(),
+  gear: z.array(z.string()).optional(),
+  steps: z.array(Step).optional(),
+  safety: z.array(z.string()).optional(),
+});
+
+export const GARDEN_KINDS = ["soil", "planting", "care", "climate", "pests"] as const;
+export const GardenEntry = z.object({
+  ...base,
+  category: z.literal("garden"),
+  kind: z.enum(GARDEN_KINDS),
+  /** When in the year this applies, in plain words. */
+  season: z.string().optional(),
+  reference: z.array(RefRow).optional(),
+  gear: z.array(z.string()).optional(),
+  steps: z.array(Step).optional(),
+  safety: z.array(z.string()).optional(),
+});
+
 export const Entry = z.discriminatedUnion("category", [
   MechanismEntry,
   KnotEntry,
   UnitsEntry,
   FieldcraftEntry,
   FirstAidEntry,
+  BuildingEntry,
+  GardenEntry,
 ]);
 
 export type Entry = z.infer<typeof Entry>;
@@ -127,6 +165,8 @@ export type KnotEntry = z.infer<typeof KnotEntry>;
 export type UnitsEntry = z.infer<typeof UnitsEntry>;
 export type FieldcraftEntry = z.infer<typeof FieldcraftEntry>;
 export type FirstAidEntry = z.infer<typeof FirstAidEntry>;
+export type BuildingEntry = z.infer<typeof BuildingEntry>;
+export type GardenEntry = z.infer<typeof GardenEntry>;
 export type Unit = z.infer<typeof Unit>;
 export type EntryOf<C extends CategoryId> = Extract<Entry, { category: C }>;
 

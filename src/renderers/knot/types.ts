@@ -7,6 +7,8 @@ export type Seg = {
   back?: boolean;
   /** Draw order among front segments (default: index). Lower = underneath. */
   z?: number;
+  /** Starts a separate rope (bends): not joined to the previous segment. */
+  start?: boolean;
 };
 
 /** What a knot's render.tsx default-exports. Client-only. */
