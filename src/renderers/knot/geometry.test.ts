@@ -11,6 +11,11 @@ import sheetBend from "@/content/knots/sheet-bend/render";
 import roundTurn from "@/content/knots/round-turn-two-half-hitches/render";
 import tautLine from "@/content/knots/taut-line-hitch/render";
 import shearLashing from "@/content/knots/shear-lashing/render";
+import squareKnot from "@/content/knots/square-knot/render";
+import prusik from "@/content/knots/prusik-hitch/render";
+import eightLoop from "@/content/knots/figure-eight-loop/render";
+import butterfly from "@/content/knots/alpine-butterfly/render";
+import diagonalLashing from "@/content/knots/diagonal-lashing/render";
 import { endOf, firstPoint, lastPoint, smoothJoints } from "./geometry";
 
 const knots = {
@@ -26,6 +31,11 @@ const knots = {
   roundTurn,
   tautLine,
   shearLashing,
+  squareKnot,
+  prusik,
+  eightLoop,
+  butterfly,
+  diagonalLashing,
 };
 
 describe("knot geometry", () => {
